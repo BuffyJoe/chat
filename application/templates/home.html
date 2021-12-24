@@ -1,0 +1,176 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block search %} 
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="search" placeholder="Search.....">
+</form>
+
+{% endblock %}
+
+{% block private %} 
+<a href="{% url 'inbox' %}">
+</a>
+{% endblock %}
+{% block content %}
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">All-Groups</button>
+      <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Your Groups</button>
+      <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Owned</button>
+    </div>
+  </nav>
+  <div class="container">
+  <div class="tab-content" id="nav-tabContent">
+    <div class="col-lg-2"></div>
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div class="col-md-6 col-lg-5 col-sm-12">
+    <h1 style="padding: 10px; text-align: center;" class="w-75">All-Groups</h1>
+    
+    {% for group in groups %}
+    <div class="card" style="margin-bottom: 10px; border: solid;">
+        <div class="card-header" style="border-bottom: solid;">
+            {% for i in group.category.all %}
+            <small class="badge bg-{{colour}} text-wrap">{{i}}</small>
+        {% endfor %} <br>
+        </div>
+        <div class="card-body">
+    <a href="{% url 'group' group.id %}" class="card-title">{{group}} </a><br>
+   <span class="card-subtitle blockquote-footer">
+    <mark> {{group.owner}} </mark> - {{group.created|timesince}} ago </span><br>
+    <small class="badge bg-{{colour2}} text-wrap">{{group.members.count}} members</small>  <br>
+    {% if request.user == group.owner %} 
+    <br>
+    <a href="{% url 'edit' group.id%}" class="btn btn-success">edit</a>
+    <a data-bs-toggle="modal" href="#exampleModalToggle{{group.id}}" class="btn btn-danger" role="button" aria-controls="exampleModalToggle">
+        Delete
+      </a> <br>
+      {% endif %}
+    </div>
+    </div>
+    
+    <div class="modal fade" id="exampleModalToggle{{group.id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel">Delete "{{group}}" ?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'delete' group.id %}" method="post">
+                    {% csrf_token %}
+                    <p> This action is permanent</p>
+                    <input type="Submit" class="btn btn-danger" value="Delete">
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    </div>
+
+<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    <div class="col-md-6 col-lg-5">
+    {% if group != None %}
+    <h1 style="padding: 10px; text-align: center;" class="">Joined Groups</h1>
+    {% for g in group %}
+    <div class="card" style="margin-bottom: 10px; border: black solid;">
+        <div class="card-header w-100" style="border-bottom: solid;">
+            {% for i in g.category.all %}
+            <small class="badge bg-{{colour}} text-wrap">{{i}}</small>
+        {% endfor %} <br>
+    </div>
+    <div class="card-body">
+        <a href="{% url 'group' g.id %}" class="card-title">{{g}} </a><br>
+   
+    <span class="card-subtitle blockquote-footer">
+            <mark> {{g.owner}} </mark> - {{g.created|timesince}} ago </span><br>
+           <small class="badge bg-{{colour2}} text-wrap">{{g.members.count}} members</small> 
+           {% if request.user == g.owner %}
+           
+        <a href="{% url 'edit' g.id%}" class="btn btn-success">edit</a>
+           <a data-bs-toggle="modal" href="#exampleModalTogglee{{g.id}}" class="btn btn-danger" role="button" aria-controls="exampleModalToggle">
+            Delete
+          </a> <br>
+          {% endif %}
+        </div>
+        </div>
+        
+        <div class="modal fade" id="exampleModalTogglee{{g.id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalToggleLabel">Delete "{{g}}" ?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'delete' g.id %}" method="post">
+                        {% csrf_token %}
+                        <p> This action is permanent</p>
+                        <input type="Submit" class="btn btn-danger" value="Delete">
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+    {% endfor %}
+    {% endif %}
+    </div>
+</div>
+
+<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+<div class="col-md-6 col-lg-5 col-sm-12">
+    <h1 style="padding: 10px; text-align: center;" class="w-75">Groups by @{{request.user}}</h1>
+    
+    {% for group in groups %}
+    {% if request.user == group.owner %} 
+    <div class="card" style="margin-bottom: 10px; border: solid;">
+        <div class="card-header" style="border-bottom: solid;">
+            {% for i in group.category.all %}
+            <small class="badge bg-{{colour}} text-wrap">{{i}}</small>
+        {% endfor %} <br>
+        </div>
+        <div class="card-body">
+    <a href="{% url 'group' group.id %}" class="card-title">{{group}} </a><br>
+   <span class="card-subtitle blockquote-footer">
+    <mark> {{group.owner}} </mark> - {{group.created|timesince}} ago </span><br>
+    <small class="badge bg-{{colour2}} text-wrap">{{group.members.count}} members</small>  <br>
+    <br>
+    <a href="{% url 'edit' group.id%}" class="btn btn-success">edit</a>
+    <a data-bs-toggle="modal" href="#exampleModalToggleee{{group.id}}" class="btn btn-danger" role="button" aria-controls="exampleModalToggle">
+        Delete
+      </a> <br>
+      {% endif %}
+    </div>
+    </div>
+    
+    <div class="modal fade" id="exampleModalToggleee{{group.id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel">Delete "{{group}}" ?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'delete' group.id %}" method="post">
+                    {% csrf_token %}
+                    <p> This action is permanent</p>
+                    <input type="Submit" class="btn btn-danger" value="Delete">
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'main.html' %}
+{% block content %}
+<style>
+    
+</style>
+<body>
+    <div>
+    <div class="container row">
+    <div class="col-md-8" style="padding-right: 5rem;">
+    <br>
+    <form action="{% url 'Join' %}" method="post" class="form-group">
+        {% csrf_token %}
+        <input type="hidden" name="group_id" value="{{group.id}}">
+        {% if request.user not in group.members.all  %}
+        <button type="submit" name="like" class="btn btn-success" value="submit">Join</button>
+        {% else %}
+        <button type="submit" name="like" value="submit" class="btn btn-danger">Leave</button>
+        {% endif %}
+    </form>
+    <h1>{{group}} <span class="h5"> <mark> - {{group.owner}} </mark> </span></h1>
+        <span class="h6">{{group.created|timesince}} ago </span> <br>
+
+    <p class="text-sm-start">
+        <small class="badge bg-info text-wrap">{{group.members.count}} members</small> 
+        {% for i in group.category.all %}
+            <small class="badge bg-success text-wrap">{{i}}</small>
+        {% endfor %} <br>
+        <hr>
+        <div>Group info</div> <br>
+        <p class="text-break w-75 h4 blockquote-footer ">{{group.description}}</p>
+        <hr>
+        {% for message in messages %}
+        <div class="message {% if message.owner == request.user %} text-end {% endif %}" style="margin-left: 10px; font-size: 20px;">
+            <p class="text-break badge {% if message.owner == request.user %} bg-primary {% else %} bg-secondary {% endif %} text-wrap" 
+                {% if message.owner == request.user %} style="text-align:  right;" {% else %} style="text-align: left;" {% endif %}>
+                    {{message}} <br> <br>
+                <small class="w-75" style="text-align: right;"> 
+                   <i> {% if message.owner != request.user %} @{{message.owner}} <br> - {% endif %} {{message.created|timesince}} ago </i>
+                </small> 
+            </p>
+        </div>
+        {% endfor %}
+
+        <br> <br>
+        {% if request.user in members%}
+    <form action="" method="post" class="form-group">
+        {% csrf_token %}
+        <label for="body" class="form-label"></label>
+        <textarea name="body" id="" cols="30" rows="10" class="form-input w-100"></textarea> <br>
+        <button type="Submit" class="btn btn-primary"name="" id=""> Comment </button>
+    </form>
+    {% endif %}
+</div>
+<br> <br> <br>
+<div class="col-md-4" style="padding-top: 5rem;">
+    {% if groups != none %}
+    <h1 >Similar Groups </h1>
+    {% for i in groups %}
+    {% if i.id != group.id %}
+    <div class="card" style="margin-bottom: 10px; border: black solid;">
+        <div class="card-header w-100" style="border-bottom: solid;">
+            {% for i in i.category.all %}
+            <small class="badge bg-info text-wrap">{{i}}</small>
+        {% endfor %} <br>
+    </div>
+    <div class="card-body">
+    <p class="text-sm-start">
+    <a href="{% url 'group' i.id %}" class="h6 card-title">{{i}} </a><br>
+   <div class="blockquote-footer card-subtitle"> <mark>{{i.owner}}</mark> <br> {{i.created|timesince}} ago <br> </div>
+<small class="badge bg-primary text-wrap">{{i.members.count}} members</small> 
+    {% if request.user == i.owner %}
+    <a href="{% url 'com' i.id%}">edit</a> <br>
+    {% endif %}
+    </p>
+    </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+ </div>
+
+</div>
+</div>
+
+
+{% endblock %}

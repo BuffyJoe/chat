@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>Chat by Onyi</title>
+<style>
+  .pad-list > li{
+    padding-left: 20px;
+  }
+
+  .blue{
+    color: blue;
+  }
+</style>
+  </head>
+<body style="padding: 5px;">
+    <nav class="navbar sticky-top navbar-light nav-fill">
+        <div class="container-fluid">
+            
+      <a class="nav-link btn btn-primary text-white" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+        Chatty
+      </a>
+        </div>
+      </nav> 
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header" style="margin-bottom: -10px;">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">MENU</h5> 
+          {% block search %} {% endblock %}
+          <br><hr>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          
+          <a class="d-block h6 blue" href="{% url 'home' %}" style="text-decoration: none;">Home </a> 
+          <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  INFO
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body"><ul class="list-unstyled pad-list" style="font-size: 15px;">
+                  <li>How it works </li>
+                  <li> About Us</li>
+                </ul>
+              </div>
+              </div>
+            </div>
+            {% if request.user.is_authenticated %}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  CREATE
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <ul class="list-unstyled pad-list" style="font-size: 15px;">
+                      <li> <a href="{% url 'create' %}"> New Group</a> </li>
+                      <li>Create Account </li>
+                      <li>Custom Tags</li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                  MESSAGE
+                </button>
+              </h2>
+              <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">                
+                  Function not yet available
+              </div>
+              </div>
+            </div>
+          </div>
+            
+         <a data-bs-toggle="modal" href="#log-out" class="h6 blue" role="button" aria-controls="exampleModalToggle" style="text-decoration: none;">
+        LOG-OUT </a>
+
+            
+    <div class="modal fade" id="log-out" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalToggleLabel">Log-out "@{{request.user}}" ?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form action="{% url 'log-out' %}" method="post">
+                  {% csrf_token %}
+                  <input type="Submit" class="btn btn-danger" value="Log-out">
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+  </div>
+</div>
+                {% else %}
+                <br>
+                    <a class="h6 blue" href="{% url 'log-in' %}" style="text-decoration: none;">Log-in</a> <br>
+                    <a class="h6 blue" href="{% url 'sign-up' %}" style="text-decoration: none;">Sign-up</a>
+                {% endif %}
+
+  
+{% block content %}
+
+{% endblock %}
+
+<!-- <script src="{% static 'https://code.jquery.com/jquery-3.4.1.slim.min.js' %}" integrity="sha384-J6qa48
+49blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+<!-- <script src="{% static 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' %}" -->
+<!-- integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+crossorigin="anonymous"></script> -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>

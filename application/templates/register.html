@@ -1,0 +1,65 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>Chat by Onyi</title>
+<style>
+  .pad-list > li{
+    padding-left: 20px;
+  }
+
+  .blue{
+    color: blue;
+  }
+</style>
+
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+      <a href="{% url 'log-in' %}" class="btn btn-success ">Log-in</a>
+  </div>
+</nav>
+
+
+</head>
+
+<div class="container">
+<div class="row">
+  <div class="col-md-4 col-sm-4"></div>
+  <div class="col-md-5 col-sm-8">
+    <br><br>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-warning alert-dismissible fade show bg-danger w-75" role="alert" style="color: white;">
+  <strong>Error!</strong> {{message}}.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="form-group">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Username</label>
+            <input type="text" class="form-control w-75" id="exampleFormControlInput1" placeholder="username" name="username">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput2" class="form-label">Password</label>
+            <input type="password" class="form-control w-75" id="exampleFormControlInput2" placeholder="**********" name="password1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput3" class="form-label">Confirm password</label>
+            <input type="password" class="form-control w-75" id="exampleFormControlInput3" placeholder="**********" name="password2">
+          </div>
+          <button type="submit" value="submit" class="btn btn-success">Sign-up</button>
+    
+    </form>
+</div>
+</div>
+</div>
+</div>

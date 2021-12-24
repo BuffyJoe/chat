@@ -1,0 +1,161 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a href="{% url 'log-in' %}" class="btn btn-success ">Get started </a>
+        <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+<style>
+.carousel-item{
+  transition-duration:       .6s;
+}
+
+.bg-main{
+  background-image: url({% static 'images/download.jpg' %}) /* linear-gradient(to left, red, orange, yellow, green, blue, purple); */
+}
+
+.bg-one{
+  background-image: linear-gradient(to bottom right, rgb(63, 60, 60), white);
+}
+.drop{
+  display: none;
+  font-size: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.otapiapia:hover .drop{
+  display: block;
+}
+
+.change{
+  background-color: white;
+}
+/* 
+.change:hover{
+  background-image: linear-gradient(white, red);
+} */
+</style>
+
+<body class="bg-main">
+
+<div class="container" style="padding-top: 30px;">
+
+  <div class="row">
+
+    <div class="col-md-2">
+      
+    </div>
+    <div class="col-md-7">
+<div id="carouselExampleDark" class="carousel carousel-dark slide " data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'images/c.jpg' %}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-sm-block d-md-block">
+        <h5 style="color: white; text-shadow: 2px 2px  black;">Merry Christmas and a Happy New year <br> We wish you a Merry Christmas, Join grops to spread the christmas cheer.</h5>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/gf.jpg' %}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-sm-block d-md-block">
+        <h5 style="color: white; text-shadow: 2px 2px  black;">Make new friends online, <br> search for groups that suit your taste </h5>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/mw.jpg' %}" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-sm-block d-md-block">
+        <h5 style="color: white; text-shadow: 2px 2px  black;">Contact friends <br> Find lost friends, search for @username</h5>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+ <br>
+<div class="card bg-dark text-white otapiapia">
+  <img class="card-img" src="{% static 'images/chatbackground.png' %}" alt="Christmas cheer"></img>
+  <div class="card-img-overlay">
+    <div class="card-title dropped">
+      <h1>  welcome to <mark> Chatty </mark> </h1>
+   </div>
+   <div class="drop"> <br>
+    <p class="text-break card-text">
+    why Chatty? Well, <br>
+    we have:
+      <ul>
+        <li>Over 1000+ active users</li>
+        <li>100+ Groups </li>
+        <li>Non-stop exchange of information</li>
+      </ul>
+
+    <blockquote>Chatty, The Whole World ar your finger Tip</blockquote>
+    </p>
+    </div>
+  </div>
+</div>
+<br>
+</div>
+<br>
+<div class="col-md-3">
+  <div class="card col-sm-4 w-75 change">
+    <div class="card-header" style="text-align: center;">
+      <h5>Ho Ho Ho, Merry Christmas</h5>
+    </div>
+    <img class="card-image" src="{% static 'images/c.jpg' %}" alt="Christmas cheer"></img>
+    <div class="card-body bg-light">
+      <p class="text-break">
+        As we approach the Holidays, share the holiday cheer with friends and family,
+      </p>
+    </div>
+  </div>
+ <br>
+
+<div class="card w-75 bg-one flex-end" style="box-shadow: 2px 2px 5px rgb(90, 87, 87), -2px -2px 5px rgb(90, 87, 87);">
+  <div class="card-header" style="text-align: center;">
+    <div class="card-title">
+      <h3 class="text-white">100+ Active Groups</h3>
+    </div>
+  </div>
+  <img class="card-image" src="{% static 'images/gf.jpg' %}" alt="Christmas cheer"></img>
+  <div class="card-body">
+    <p class="text-break" style="font-size: large; color: white;">
+      find groups tailord to your needs and requirements 
+    </p>
+    <a href="" class="btn btn-success">Go</a>
+  </div>
+</div>
+</div>
+</div>
+</body>
+
+<!-- <br><br><br>
+<div class="card">
+      <p> Respond to your messages</p>
+</div> -->
+
+<br> <br> <br>
+<div class="navbar fixed-bottom navbar-light bg-light">
+  <div class="container-fluid text-center">
+    <h4 class="text-center" style="text-align: center;">Where we breach the barrier of distance..... <br>
+    </h4>
+  </div>
+</div>
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
